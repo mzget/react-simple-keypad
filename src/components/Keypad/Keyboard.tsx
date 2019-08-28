@@ -7,6 +7,7 @@ type KeyboardProps = {
   InputComp?: React.ComponentType<{ inputValue: string }>;
   platform?: "ios" | "android";
   layout?: "numpad" | "hide_point";
+  handleChange?: (value: string) => void;
   handleSubmit: (value: string) => void;
 };
 
@@ -26,6 +27,7 @@ const Keyboard = (props: KeyboardProps) => {
   let btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "-"];
   const {
     handleSubmit,
+    handleChange,
     InputComp,
     platform = "ios",
     layout = "numpad"
@@ -47,6 +49,7 @@ const Keyboard = (props: KeyboardProps) => {
         newVal = inputValue.concat(value);
       }
       setValue(newVal);
+      if (handleChange) handleChange(newVal);
     },
     [inputValue]
   );
