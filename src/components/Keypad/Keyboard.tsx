@@ -7,8 +7,10 @@ type KeyboardProps = {
   InputComp?: React.ComponentType<{ inputValue: string }>;
   platform?: "ios" | "android";
   layout?: "numpad" | "hide_point";
+  // customValue?: string;
+  customLogic?: boolean;
   handleChange?: (value: string) => void;
-  handleSubmit: (value: string) => void;
+  handleSubmit: (value: string | any) => void;
 };
 
 function handleMouseEnter(e: any) {
@@ -30,7 +32,8 @@ const Keyboard = (props: KeyboardProps) => {
     handleChange,
     InputComp,
     platform = "ios",
-    layout = "numpad"
+    layout = "numpad",
+    customLogic
   } = props;
   const [inputValue, setValue] = useState("");
 
@@ -42,6 +45,11 @@ const Keyboard = (props: KeyboardProps) => {
     (value: string) => (e: any) => {
       e.preventDefault();
 
+      if (customLogic && handleChange) {
+        handleChange(value);
+        return;
+      }
+
       let newVal = "";
       if (value === "-") {
         newVal = inputValue.slice(0, -1);
@@ -51,7 +59,7 @@ const Keyboard = (props: KeyboardProps) => {
       setValue(newVal);
       if (handleChange) handleChange(newVal);
     },
-    [inputValue]
+    [inputValue, customLogic, handleChange]
   );
 
   const handleDone = useCallback(
@@ -60,14 +68,16 @@ const Keyboard = (props: KeyboardProps) => {
 
       handleSubmit(inputValue);
     },
-    [inputValue]
+    [inputValue, handleSubmit]
   );
 
   return (
     <Container platform={platform}>
       {!!InputComp ? <InputComp inputValue={inputValue} /> : null}
       <ActionPad>
-        <DoneBtn onClick={handleDone}>Done</DoneBtn>
+        <DoneBtn onClick={customLogic ? handleSubmit : handleDone}>
+          Done
+        </DoneBtn>
       </ActionPad>
       <KeypadContainer className="test">
         {btns.map((v, i, arr) => (
@@ -78,7 +88,11 @@ const Keyboard = (props: KeyboardProps) => {
             onMouseUp={handleMouseExit}
             onMouseOut={handleMouseExit}
           >
-            {v !== "-" ? v : <img src={""} width={24} height={24} />}
+            {v !== "-" ? (
+              v
+            ) : (
+              <img alt="delete_button" src={""} width={24} height={24} />
+            )}
           </ButtonPad>
         ))}
       </KeypadContainer>

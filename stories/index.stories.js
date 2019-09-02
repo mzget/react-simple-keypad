@@ -22,6 +22,32 @@ const HookKeypad =(props) => {
     ></Keyboard>
     </div>
   )}
+  const CustomLogicKeypad =(props) => {
+    let [customValue , setValue] = useState('');
+
+    function customChange(value) {
+      let newVal = "";
+      if (value === "-") {
+        newVal = customValue.slice(0, -1);
+      } else {
+        newVal = customValue.concat(value);
+      }
+      setValue(newVal);
+    }
+  
+    return (
+      <div style={{display: 'flex', flexDirection:'column', height: '100vh'}}>
+      <input value={customValue} readOnly/>
+      <span style={{flex:1}} />
+      <Keyboard
+        platform="ios"
+        handleSubmit={v => console.log("Submit")}
+        customLogic
+        layout='hide_point'
+        handleChange={customChange}
+      ></Keyboard>
+      </div>
+    )}
 
 storiesOf("Keypad", module).add("with input props", () => (
   <Keyboard
@@ -30,4 +56,4 @@ storiesOf("Keypad", module).add("with input props", () => (
     handleSubmit={value => console.log("value", value)}
     layout='hide_point'
   ></Keyboard>
-)).add("without input", () => <HookKeypad />);
+)).add("without input", () => <HookKeypad />).add("Custom Input", () => <CustomLogicKeypad />);
