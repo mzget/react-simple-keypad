@@ -15,7 +15,9 @@
     "declaration": true,
     "jsx": "react",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": ["./src", "index.d.ts"],
   "exclude": ["node_modules", "./src/App.tsx", "./src/index.tsx"]
