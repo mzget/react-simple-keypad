@@ -13,12 +13,13 @@
     "module": "esnext",
     "moduleResolution": "node",
     "declaration": true,
+    "isolatedModules": false,
     "jsx": "react",
     "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,
-    "noEmit": true
+    "noEmit": false
   },
   "include": ["./src", "index.d.ts"],
-  "exclude": ["node_modules", "./src/App.tsx", "./src/index.tsx"]
+  "exclude": ["./src/App.tsx", "./src/index.tsx"]
 }

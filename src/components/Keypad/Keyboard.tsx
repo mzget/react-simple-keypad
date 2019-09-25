@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 
 // import NumpadDelete from "./iconNumpadDelete.png";
+const NumpadDelete = require("../../assets/iconNumpadDelete@2x.png");
 
 type KeyboardProps = {
   InputComp?: React.ComponentType<{ inputValue: string }>;
@@ -91,7 +92,12 @@ const Keyboard = (props: KeyboardProps) => {
             {v !== "-" ? (
               v
             ) : (
-              <img alt="delete_button" src={""} width={24} height={24} />
+              <img
+                alt="delete_button"
+                src={NumpadDelete}
+                width={24}
+                height={24}
+              />
             )}
           </ButtonPad>
         ))}
