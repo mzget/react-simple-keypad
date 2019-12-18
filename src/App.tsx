@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import { Keyboard } from "./components/Keypad/Keyboard";
 
 function App() {
