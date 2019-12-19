@@ -39,21 +39,21 @@ class ReactSKB extends Component<any, ReactSKBState> {
     this.keyboard = React.createRef();
     this.thLayout = produce(layout, draftState => {
       let lastDefault = draftState["default"][4].split(" ");
-      lastDefault[0] = "🌐";
+      lastDefault[0] = "{en}";
       draftState["default"][4] = lastDefault.join(" ");
 
       let lastShift = draftState["shift"][4].split(" ");
-      lastShift[0] = "🌐";
+      lastShift[0] = "{en}";
       draftState["shift"][4] = lastShift.join(" ");
     });
 
     this.enLayout = produce(enlayout, draftState => {
       let lastDefault = draftState["default"][4].split(" ");
-      lastDefault[0] = "🌐";
+      lastDefault[0] = "{th}";
       draftState["default"][4] = lastDefault.join(" ");
 
       let lastShift = draftState["shift"][4].split(" ");
-      lastShift[0] = "🌐";
+      lastShift[0] = "{th}";
       draftState["shift"][4] = lastShift.join(" ");
     });
 
@@ -65,7 +65,6 @@ class ReactSKB extends Component<any, ReactSKBState> {
     this.setState({
       input: input
     });
-    console.log("Input changed", input);
   };
 
   onKeyPress = button => {
@@ -75,7 +74,7 @@ class ReactSKB extends Component<any, ReactSKBState> {
      * If you want to handle the shift and caps lock buttons
      */
     if (button === "{shift}" || button === "{lock}") this.handleShift();
-    if (button === "🌐") this.handleLocale();
+    if (button === "{en}" || button === "{th}") this.handleLocale();
   };
 
   handleShift = () => {
@@ -118,6 +117,10 @@ class ReactSKB extends Component<any, ReactSKBState> {
           onChange={(input: string) => this.onChange(input)}
           onKeyPress={(button: string) => this.onKeyPress(button)}
           layout={this.state.lang === "TH" ? this.thLayout : this.enLayout}
+          display={{
+            "{th}": "กขค",
+            "{en}": "ABC"
+          }}
         />
       </div>
     );
